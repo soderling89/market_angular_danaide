@@ -68,11 +68,11 @@ export class CarritoService {
       this.pagoTotal = this.cartTotal * 0.8;
       this.productAddedSource.next({ products: this.products, cartTotal: this.pagoTotal});
     } else if (this.cantTotal>10) {
-        if (this.esFechaEspecial(fecha)) {
-          this.pagoTotal = this.cartTotal - 500;
-          this.productAddedSource.next({ products: this.products, cartTotal: this.pagoTotal});
-        } else if (vip) {
+        if (vip) {
           this.pagoTotal = this.cartTotal - 700;
+          this.productAddedSource.next({ products: this.products, cartTotal: this.pagoTotal});
+        } else if (this.esFechaEspecial(fecha)) {
+          this.pagoTotal = this.cartTotal - 500;
           this.productAddedSource.next({ products: this.products, cartTotal: this.pagoTotal});
         }
          else {
