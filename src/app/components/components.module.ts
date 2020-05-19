@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ProductoComponent } from './producto/producto.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { ComboFechaComponent } from './combo-fecha/combo-fecha.component';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [ProductoComponent, CarritoComponent, ComboFechaComponent],
   imports: [
-    CommonModule
+    CommonModule, FormsModule      
   ],
   exports: [ProductoComponent, CarritoComponent, ComboFechaComponent]
 })

@@ -12,11 +12,11 @@ export class CarritoService {
 
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
   
-  FECHA_ESPECIAL = '18/5/2020'
+  FECHA_ESPECIAL = '23/5/2020'
 
   fechaEspecial : boolean
 
-  //acu : number = 0;
+  pagoTotal : number = 0;
   cantTotal : number = 0;
 
   products: any[] = [];
@@ -60,12 +60,15 @@ export class CarritoService {
     this.cantTotal = this.cantidadCarrito(this.products)
 
     if (this.cantTotal === 5){
-      this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal * 0.8});
+      this.pagoTotal = this.cartTotal * 0.8;
+      this.productAddedSource.next({ products: this.products, cartTotal: this.pagoTotal});
     } else if (this.cantTotal>10) {
         if (this.esFechaEspecial(fecha)) {
-          this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal - 500});
+          this.pagoTotal = this.cartTotal - 500;
+          this.productAddedSource.next({ products: this.products, cartTotal: this.pagoTotal});
         } else {
-          this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal - 200});
+          this.pagoTotal = this.cartTotal - 200;
+          this.productAddedSource.next({ products: this.products, cartTotal: this.pagoTotal});
         }
     } else {
       this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal});
@@ -122,7 +125,7 @@ export class CarritoService {
 
   create() : Observable<Pedido> {
     //debugger
-    let nuevopedido : Pedido = new Pedido(1, new Date(), this.cartTotal);    
+    let nuevopedido : Pedido = new Pedido(1, new Date(), this.pagoTotal);    
 
     return this.http.post<Pedido>(this.urlEndPoint, nuevopedido, {headers: this.httpHeaders})
   }

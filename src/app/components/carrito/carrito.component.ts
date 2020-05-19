@@ -1,5 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CarritoService } from 'src/app/service/carrito.service';
+import {Router, ActivatedRoute} from '@angular/router'
+import Swal from 'sweetalert2';
+
 
 const OFFSET_HEIGHT = 170;
 const PRODUCT_HEIGHT = 48;
@@ -24,7 +27,7 @@ export class CarritoComponent implements OnInit {
   changeDetectorRef: ChangeDetectorRef;
 
 
-  constructor(private carritoService: CarritoService, changeDetectorRef: ChangeDetectorRef) {
+  constructor(private carritoService: CarritoService, changeDetectorRef: ChangeDetectorRef, private router: Router) {
     this.changeDetectorRef = changeDetectorRef;
   }
 
@@ -68,9 +71,11 @@ export class CarritoComponent implements OnInit {
 
   create(): void {
     this.carritoService.create()
-      .subscribe(resp => {
-        // this.router.navigate(['/clientes'])
-        // swal('Nuevo cliente', `Cliente ${cliente.nombre} creado con éxito!`, 'success')
+      .subscribe(resp => {              
+        Swal.fire('Nuevo pedido', `Nuevo pedido creado con éxito!`, 'success').then(function() {
+          window.location.reload();
+      });
+        
       }
       );
   }

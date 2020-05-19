@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CarritoService } from 'src/app/service/carrito.service';
 
 @Component({
   selector: 'app-combo-fecha',
@@ -8,11 +9,22 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ComboFechaComponent implements OnInit {
   @Input() fechas : any
 
-  fechaSeleccionada : any
+  fechaSeleccionada : string
 
-  constructor() { }
+  fechaEspecial : boolean
 
-  ngOnInit(): void {
+  constructor(private carritoService : CarritoService) { }
+
+  ngOnInit(): void {   
+
+  }
+
+  get esFechaEspecial() {    
+    if (this.carritoService.esFechaEspecial(this.fechaSeleccionada)) {
+      return true;
+    } else {
+      return false
+    }
   }
 
 }
