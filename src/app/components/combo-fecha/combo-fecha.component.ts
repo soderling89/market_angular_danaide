@@ -19,7 +19,7 @@ export class ComboFechaComponent implements OnInit {
 
   }
 
-  get esFechaEspecial() {    
+  get esFechaEspecial() {        
     if (this.carritoService.esFechaEspecial(this.fechaSeleccionada)) {
       return true;
     } else {

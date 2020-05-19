@@ -28,6 +28,11 @@ export class CatalogoComponent implements OnInit {
 
   ];  
 
+  usuarios: any[] = [
+    { id: 1, nombre: "soderling" },
+    { id: 2, nombre: "lula"}  
+  ]; 
+
   constructor() { }
 
   ngOnInit(): void {

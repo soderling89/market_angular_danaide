@@ -1,15 +1,15 @@
 <div class="row">
 
-<label>Seleccione fecha:</label>
+  <label>Fecha:</label> 
 
-<select class="form-control col-6" id="seleccionarFecha" [(ngModel)]="fechaSeleccionada" name="seleccionarFecha">
+  <select class="form-control col-6" id="seleccionarFecha" [(ngModel)]="fechaSeleccionada" name="seleccionarFecha">
     <option [value]="fecha.fecha" *ngFor="let fecha of fechas">
       {{fecha.fecha}}</option>
-</select>
+  </select>
 
-<br>
-<br>
+  <br>  
+  <br>
 
-<label style="color:red" *ngIf="esFechaEspecial">Selecciono una fecha especial</label>
+  <label style="color:red" *ngIf="esFechaEspecial">Selecciono una fecha especial</label>  
 
 </div>

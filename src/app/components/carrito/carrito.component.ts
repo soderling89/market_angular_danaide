@@ -73,6 +73,7 @@ export class CarritoComponent implements OnInit {
     this.carritoService.create()
       .subscribe(resp => {              
         Swal.fire('Nuevo pedido', `Nuevo pedido creado con éxito!`, 'success').then(function() {
+          localStorage.clear();
           window.location.reload();
       });
         

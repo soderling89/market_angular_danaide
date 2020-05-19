@@ -9,12 +9,15 @@ import { Pedido } from '../modelo/pedido';
 })
 export class CarritoService {
   private urlEndPoint: string = 'http://localhost:8080/api/pedidos';
+  private urlEndPointUsuarioVip: string = 'http://localhost:8080/usuarios/vip';
 
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
   
   FECHA_ESPECIAL = '23/5/2020'
 
   fechaEspecial : boolean
+
+    
 
   pagoTotal : number = 0;
   cantTotal : number = 0;
@@ -29,8 +32,10 @@ export class CarritoService {
 
   constructor(private http: HttpClient) { }
 
-  addProductToCart(product) {        
+  addProductToCart(product) {            
     let fecha : string;
+
+    let vip = JSON.parse(localStorage.getItem('vip')); 
 
     let elemHTML: any = document.getElementsByName('seleccionarFecha')[0];
     fecha = elemHTML.value    
@@ -66,7 +71,11 @@ export class CarritoService {
         if (this.esFechaEspecial(fecha)) {
           this.pagoTotal = this.cartTotal - 500;
           this.productAddedSource.next({ products: this.products, cartTotal: this.pagoTotal});
-        } else {
+        } else if (vip) {
+          this.pagoTotal = this.cartTotal - 700;
+          this.productAddedSource.next({ products: this.products, cartTotal: this.pagoTotal});
+        }
+         else {
           this.pagoTotal = this.cartTotal - 200;
           this.productAddedSource.next({ products: this.products, cartTotal: this.pagoTotal});
         }
@@ -124,10 +133,14 @@ export class CarritoService {
   // }
 
   create() : Observable<Pedido> {
-    //debugger
-    let nuevopedido : Pedido = new Pedido(1, new Date(), this.pagoTotal);    
+    let idUsuario : number = JSON.parse(localStorage.getItem('idUsuario'));
+    let nuevopedido : Pedido = new Pedido(idUsuario, new Date(), this.pagoTotal);    
 
     return this.http.post<Pedido>(this.urlEndPoint, nuevopedido, {headers: this.httpHeaders})
+  }
+
+  getUsuarioVip(id : number): Observable<boolean>{
+    return this.http.get<boolean>(`${this.urlEndPointUsuarioVip}/${id}`)
   }
 
 }

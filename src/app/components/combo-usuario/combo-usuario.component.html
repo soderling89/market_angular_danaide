@@ -1,0 +1,17 @@
+<div class="row">
+
+    <label>Usuario:</label>
+  
+    <select class="form-control col-6" id="seleccionarUsuario" [(ngModel)]="usuarioSeleccionado" name="seleccionarUsuario">
+      <option [value]="usuario.id" *ngFor="let usuario of usuarios">
+        {{usuario.nombre}}</option>
+    </select>
+
+    <button type="submit" (click)="esUsuarioVip()" class="btn ui-button">Cambiar</button>
+  
+    <br>
+    <br>
+  
+    <label style="color:red" *ngIf="vip">Selecciono un usuario VIP</label>
+  
+  </div>
