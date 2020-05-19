@@ -66,4 +66,13 @@ export class CarritoComponent implements OnInit {
     this.expanded = !this.expanded;
   }
 
+  create(): void {
+    this.carritoService.create()
+      .subscribe(resp => {
+        // this.router.navigate(['/clientes'])
+        // swal('Nuevo cliente', `Cliente ${cliente.nombre} creado con éxito!`, 'success')
+      }
+      );
+  }
+
 }

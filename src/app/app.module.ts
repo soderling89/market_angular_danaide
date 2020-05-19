@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { CarritoService } from './service/carrito.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     PagesModule,
-    NgbModule    
+    NgbModule,
+    HttpClientModule    
   ],
   providers: [CarritoService],
   bootstrap: [AppComponent]

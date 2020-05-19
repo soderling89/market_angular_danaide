@@ -1,13 +1,17 @@
 import { Injectable, ElementRef, ViewChild } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Pedido } from '../modelo/pedido';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarritoService {
+  private urlEndPoint: string = 'http://localhost:8080/api/pedidos';
 
-  //@ViewChild('txtFechaEspecial') txtFechaEspecial: ElementRef;
+  private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
+  
   FECHA_ESPECIAL = '18/5/2020'
 
   fechaEspecial : boolean
@@ -23,10 +27,9 @@ export class CarritoService {
 
   productAdded$ = this.productAddedSource.asObservable();
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  addProductToCart(product) { 
-    debugger   
+  addProductToCart(product) {        
     let fecha : string;
 
     let elemHTML: any = document.getElementsByName('seleccionarFecha')[0];
@@ -111,6 +114,17 @@ export class CarritoService {
       acu += carrito[i].quantity
     }
   return acu;
+  }
+
+  // create(cliente: Cliente) : Observable<Cliente> {
+  //   return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.httpHeaders})
+  // }
+
+  create() : Observable<Pedido> {
+    //debugger
+    let nuevopedido : Pedido = new Pedido(1, new Date(), this.cartTotal);    
+
+    return this.http.post<Pedido>(this.urlEndPoint, nuevopedido, {headers: this.httpHeaders})
   }
 
 }
