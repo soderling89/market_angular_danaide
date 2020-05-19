@@ -1,7 +1,12 @@
+/* Importing Bootstrap SCSS file. */
+// @import '~bootstrap/scss/bootstrap';
+
 /* You can add global styles to this file, and also import other style files */
 @import "./app/shared/grid";
 @import "./app/shared/colors";
 $font-family: 'Roboto', Helvetica, sans-serif;
+
+
 
 html, body {
   font-family: $font-family;
@@ -42,3 +47,5 @@ select {
 button {
   cursor: pointer;
 }
+
+

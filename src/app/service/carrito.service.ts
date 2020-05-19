@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 
 
@@ -6,6 +6,14 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class CarritoService {
+
+  //@ViewChild('txtFechaEspecial') txtFechaEspecial: ElementRef;
+  FECHA_ESPECIAL = '18/5/2020'
+
+  fechaEspecial : boolean
+
+  //acu : number = 0;
+  cantTotal : number = 0;
 
   products: any[] = [];
   cartTotal = 0;
@@ -17,10 +25,18 @@ export class CarritoService {
 
   constructor() { }
 
-  addProductToCart(product) {
+  addProductToCart(product) { 
+    debugger   
+    let fecha : string;
+
+    let elemHTML: any = document.getElementsByName('seleccionarFecha')[0];
+    fecha = elemHTML.value    
+
     let exists = false;
     const parsedPrice = parseFloat(product.price.replace(/\./g, '').replace(',', '.'));
-    this.cartTotal += parsedPrice;
+   
+    this.cartTotal += parsedPrice;    
+    
     // Search this product on the cart and increment the quantity
     this.products = this.products.map(_product => {
       if (_product.product.id === product.id) {
@@ -38,7 +54,27 @@ export class CarritoService {
       });
     }
 
-    this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal });
+    this.cantTotal = this.cantidadCarrito(this.products)
+
+    if (this.cantTotal === 5){
+      this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal * 0.8});
+    } else if (this.cantTotal>10) {
+        if (this.esFechaEspecial(fecha)) {
+          this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal - 500});
+        } else {
+          this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal - 200});
+        }
+    } else {
+      this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal});
+    }
+
+    // if (this.esFechaEspecial(fecha)){
+    //   this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal - 500});
+    // }
+    // else {
+    //   this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal});
+    // }
+    
   }
 
   deleteProductFromCart(product) {
@@ -58,4 +94,23 @@ export class CarritoService {
     this.cartTotal = 0;
     this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal });
   }
+
+  esFechaEspecial(fecha: string) : boolean {
+    if (fecha === this.FECHA_ESPECIAL) {
+      return true;
+    } else {
+      return false
+    }
+  }
+
+  cantidadCarrito(carrito: any[]) : number {        
+    let i;
+    let acu = 0;
+    
+    for (i = 0; i< carrito.length; i++) {
+      acu += carrito[i].quantity
+    }
+  return acu;
+  }
+
 }

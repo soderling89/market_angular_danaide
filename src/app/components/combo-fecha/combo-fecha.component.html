@@ -1,0 +1,10 @@
+<div class="row">
+
+<label>Seleccione fecha:</label>
+
+<select #txtFechaEspecial class="form-control col-6" id="seleccionarFecha" name="seleccionarFecha">
+    <option [value]="fecha.fecha" *ngFor="let fecha of fechas">
+      {{fecha.fecha}}</option>
+</select>
+
+</div>

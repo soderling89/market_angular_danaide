@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { CarritoService } from './service/carrito.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { CarritoService } from './service/carrito.service';
   ],
   imports: [
     BrowserModule,
-    PagesModule    
+    PagesModule,
+    NgbModule    
   ],
   providers: [CarritoService],
   bootstrap: [AppComponent]
