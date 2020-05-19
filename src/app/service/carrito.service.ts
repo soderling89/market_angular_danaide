@@ -43,9 +43,8 @@ export class CarritoService {
     let exists = false;
     const parsedPrice = parseFloat(product.price.replace(/\./g, '').replace(',', '.'));
    
-    this.cartTotal += parsedPrice;    
+    this.cartTotal += parsedPrice;     
     
-    // Search this product on the cart and increment the quantity
     this.products = this.products.map(_product => {
       if (_product.product.id === product.id) {
         _product.quantity++;
@@ -53,7 +52,7 @@ export class CarritoService {
       }
       return _product;
     });
-    // Add a new product to the cart if it's a new product
+    
     if (!exists) {
       product.parsedPrice = parsedPrice;
       this.products.push({
@@ -81,14 +80,7 @@ export class CarritoService {
         }
     } else {
       this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal});
-    }
-
-    // if (this.esFechaEspecial(fecha)){
-    //   this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal - 500});
-    // }
-    // else {
-    //   this.productAddedSource.next({ products: this.products, cartTotal: this.cartTotal});
-    // }
+    }   
     
   }
 
@@ -126,11 +118,7 @@ export class CarritoService {
       acu += carrito[i].quantity
     }
   return acu;
-  }
-
-  // create(cliente: Cliente) : Observable<Cliente> {
-  //   return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.httpHeaders})
-  // }
+  } 
 
   create() : Observable<Pedido> {
     let idUsuario : number = JSON.parse(localStorage.getItem('idUsuario'));

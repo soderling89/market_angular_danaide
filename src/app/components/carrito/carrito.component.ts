@@ -40,8 +40,7 @@ export class CarritoComponent implements OnInit {
         acc += product.quantity;
         return acc;
       }, 0);
-
-      // Make a plop animation
+      
       if (this.numProducts > 1) {
         this.animatePlop = true;
         setTimeout(() => {
